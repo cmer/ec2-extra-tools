@@ -1,0 +1,15 @@
+EC2-EXTRA-TOOLS is a set of extra command line tools for Amazon EC2 and EBS.
+They are designed to extend the existing API tools provided by Amazon.  I
+started the project because I needed a convenient way of identifying the 
+current instance and EBS volumes. I intent to add more tools as I need them.
+You are more than welcome to fork this project on Github and add your own
+tools.  I'll merge them back in my branch.
+
+Included tools:
+ec2-identify-instance: returns the EC2 instance id of the current instance
+ec2-identify-volume: returns the EBS volume id of a device
+
+
+October 26, 2008
+Carl Mercier
+carl at carlmercier dot com
