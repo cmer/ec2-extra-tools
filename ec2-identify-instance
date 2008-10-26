@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/ruby
 
 ip = open("http://whatismyip.com/automation/n09230945.asp") { |u| u.read }
 instance_info = `ec2-describe-instances | grep #{ip.gsub(".","-")}`
