@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-# Returns the EBS volume id of a device
+# Returns the EBS volume id of a device.  eg: /dev/sdj
 
 require 'open-uri'
 
