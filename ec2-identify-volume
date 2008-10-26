@@ -2,8 +2,6 @@
 
 # Returns the EBS volume id of a device.  eg: /dev/sdj
 
-require 'open-uri'
-
 if ARGV[0].nil?
   puts "You must specify the device.  eg: ec2-identify-volume /dev/sdj"
   exit 1
