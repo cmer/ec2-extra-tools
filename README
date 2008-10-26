@@ -5,6 +5,9 @@ current instance and EBS volumes. I intent to add more tools as I need them.
 You are more than welcome to fork this project on Github and add your own
 tools.  I'll merge them back in my branch.
 
+These tools are still in their infancy.  I haven't done any exception handling
+or performance improvements.  However, they are working well for me.
+
 Included tools:
 ec2-identify-instance: returns the EC2 instance id of the current instance
 ec2-identify-volume: returns the EBS volume id of a device
