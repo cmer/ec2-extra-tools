@@ -1,0 +1,15 @@
+#!/usr/bin/ruby
+
+# Returns the EBS volume id of a device
+
+require 'open-uri'
+
+if ARGV[0].nil?
+  puts "You must specify the device.  eg: ec2-identify-volume /dev/sdj"
+  exit 1
+end
+
+instance_id = `ec2-identify-instance`
+device = ARGV[0].strip.downcase
+volume_id = `ec2-describe-volumes | grep #{instance_id} | grep #{device}`.split("\t")[1]
+print volume_id
