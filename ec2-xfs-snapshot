@@ -1,0 +1,49 @@
+#!/usr/bin/ruby -w
+
+# Creates an EBS snapshot of an XFS volume by properly freezing the volume
+# first to ensure data consistency.
+
+class NilClass; def empty?; true; end; end
+
+if ARGV[0].empty? or ARGV[0].count("/") < 2 or ARGV[0] == "--help" or ARGV[0] == "-h"
+  puts "ec2-xfs-snapshot <devicename>\nexample: ec2-xfs-snapshot /dev/sdj"
+  exit 1
+end
+
+def exec(cmd)
+  out = `#{cmd}`
+  raise "'#{cmd}' did not exit gracefully." if $? != 0
+  return out
+end
+
+def get_mountpoint(device)
+  out = `mount`
+  out.each_line do |l|
+    return l.split(" ")[2] if l.index(device) == 0
+  end
+  raise "Mount point not found for device #{device}"
+end
+
+begin
+  device = ARGV[0]
+  puts "device: #{device}"
+  
+  mountpoint = get_mountpoint(device)
+  puts "mount point: #{mountpoint}"
+  
+  ec2_volume_id = exec("ec2-identify-volume #{device}")
+  puts "ec2-volume-id: #{ec2_volume_id}"
+  
+  puts ""
+  puts "Freezing XFS volume..."
+  puts exec("xfs_freeze -f #{mountpoint}")
+  puts "Creating snapshot..."
+  puts exec("ec2-create-snapshot #{ec2_volume_id}")
+rescue Exception=>ex
+  puts "EXCEPTION: #{ex.message}"
+  exit 1
+ensure
+  puts "Unfreezing XFS volume..."
+  puts exec("xfs_freeze -u #{mountpoint}")
+  puts "Done!"
+end
