@@ -1,7 +1,5 @@
 #!/usr/bin/ruby
 
 require 'open-uri'
-ip = open("http://whatismyip.com/automation/n09230945.asp") { |u| u.read }
-instance_info = `ec2-describe-instances | grep #{ip.gsub(".","-")}`
-instance_id = instance_info.split("\t")[1]
+instance_id =  open("http://169.254.169.254/latest/meta-data/instance-id") { |u| u.read }
 print instance_id
